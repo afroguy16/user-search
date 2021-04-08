@@ -8,7 +8,7 @@ import { UsersResponse } from '../shared/types/user';
 export class UserService {
   constructor(private http: HttpClient) { }
 
-  getUser() {
-    return this.http.get<UsersResponse>('https://api.github.com/search/users?q=example');
+  getUser(username: string) {
+    return this.http.get<UsersResponse>(`https://api.github.com/search/users?q=${username}`);
   }
 }

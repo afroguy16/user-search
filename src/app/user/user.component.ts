@@ -20,7 +20,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   getUsers(): void {
-    this.userService.getUser()
+    this.userService.getUser('afroguy16')
     .pipe(
       takeWhile(() => this.alive)
     )

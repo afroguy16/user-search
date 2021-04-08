@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { UserService } from '../user/user.service';
+
+const SEARCH_DELAY = 1000;
 
 @Component({
   selector: 'app-search-users',
@@ -6,10 +11,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search-users.component.scss']
 })
 export class SearchUsersComponent implements OnInit {
+  searchValue = '';
+  searchUsersControl: FormControl;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.activateSearchUsersInput();
+  }
+
+  activateSearchUsersInput(): void {
+    this.searchUsersControl = new FormControl();
+
+    this.searchUsersControl.valueChanges.pipe(debounceTime(SEARCH_DELAY), distinctUntilChanged())
+    .subscribe(() => {
+      this.userService.getUser(this.searchValue);
+    });
+  }
+
+  searchUsers(event): void {
+    console.log(event)
   }
 
 }
