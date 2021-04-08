@@ -11,6 +11,7 @@ export class UserComponent implements OnInit, OnDestroy {
   alive = true;
   usersTotalCount = 0;
   users = [];
+  currentPage = 1;
 
   constructor(private userService: UserService) { }
 
@@ -27,6 +28,10 @@ export class UserComponent implements OnInit, OnDestroy {
       this.usersTotalCount = response.total_count;
       this.users.push(...response.items);
     })
+  }
+
+  nextPage(event: number): void {
+    this.currentPage = event;
   }
 
   ngOnDestroy(): void {

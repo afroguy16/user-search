@@ -1,5 +1,5 @@
 <ul class="users" *ngIf="users.length > 0">
-  <li *ngFor="let user of users; let i = index" [tabindex]="index">
+  <li *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: currentPage, totalItems: 500 }; let i = index" [tabindex]="index" >
     <div class="image" [ngStyle]="{background: 'url(' + user.avatar_url + ') center center', backgroundSize: 'cover'}"></div>
     <div class="content">
       <h3>{{user.login}}</h3>
@@ -10,3 +10,5 @@
     </div>
   </li>
 </ul>
+
+<pagination-controls (pageChange)="nextPage($event)"></pagination-controls>
