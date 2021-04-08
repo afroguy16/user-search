@@ -11,8 +11,9 @@ export const saveUsers = createAction(
   props<{usersResponse: UsersResponse}>()
 );
 
-export const authenticateFail = createAction(
-  '[Auth] Authenticate Fail',
+// This action can be used to send feedback to the component
+export const setErrorMessage = createAction(
+  '[Users] setErrorMessage',
   props<{
     errorMessage: string
   }>()
