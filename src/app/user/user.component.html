@@ -1,6 +1,12 @@
-<ul *ngFor="let user of users">
-  <li>
-    <p>{{user.username}}</p>
-    <p>{{user.age}}</p>
+<ul class="users" *ngIf="users.length > 0">
+  <li *ngFor="let user of users; let i = index" [tabindex]="index">
+    <div class="image" [ngStyle]="{background: 'url(' + user.avatar_url + ') center center', backgroundSize: 'cover'}"></div>
+    <div class="content">
+      <h3>{{user.login}}</h3>
+      <ul>
+        <li>28 followers</li>
+        <li>30 following</li>
+      </ul>
+    </div>
   </li>
 </ul>

@@ -1,0 +1,41 @@
+.users {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-gap: 20px;
+
+  > li {
+    box-shadow: 0 1px 3px #00000012;
+    border-radius: 8px;
+    display: flex;
+    cursor: pointer;
+    transition: border-color 0.5s;
+    &:hover {
+      box-shadow: 0 3px 6px #0000001A;
+    }
+    &:active {
+      box-shadow: 0 1px 6px #0000000D;
+    }
+  }
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+  font-size: 14px;
+}
+
+.image {
+  width: 120px;
+  height: auto;
+}
+
+.content {
+  padding: 20px;
+  h3 {
+    text-transform: capitalize;
+    margin-bottom: 10px;
+  }
+}
