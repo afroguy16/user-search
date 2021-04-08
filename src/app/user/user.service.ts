@@ -10,7 +10,6 @@ export class UserService {
   constructor(private http: HttpClient, private store: Store) { }
 
   getUser(username: string) {
-    console.log(username);
     this.store.dispatch(rootActions.searchUsers({username}));
   }
 }

@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { UserService } from '../user/user.service';
 
-const SEARCH_DELAY = 1000;
+const SEARCH_DELAY = 500;
 
 @Component({
   selector: 'app-search-users',
@@ -11,7 +11,6 @@ const SEARCH_DELAY = 1000;
   styleUrls: ['./search-users.component.scss']
 })
 export class SearchUsersComponent implements OnInit {
-  alive = true;
   searchValue = '';
   searchUsersControl: FormControl;
 
@@ -28,10 +27,6 @@ export class SearchUsersComponent implements OnInit {
       .subscribe(value => {
         value && this.userService.getUser(value);
       });
-  }
-
-  searchUsers(event): void {
-    console.log(event)
   }
 
 }

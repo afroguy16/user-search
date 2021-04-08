@@ -18,7 +18,14 @@ export class UserComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService, private store: Store<{users: UsersResponse}>) { }
 
   ngOnInit(): void {
-    // this.getUsers();
+    this.setUsers();
+  }
+
+  setUsers(): void {
+    this.store.select('users').pipe(takeWhile(() => this.alive))
+    .subscribe((usersResponse: UsersResponse) => {
+      this.users = usersResponse.items;
+    })
   }
 
   nextPage(event: number): void {

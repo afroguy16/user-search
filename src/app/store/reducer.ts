@@ -15,7 +15,7 @@ const _reducer = createReducer(initialState,
       ...state,
       total_count: action.usersResponse.total_count,
       incomplete_result: action.usersResponse.incomplete_results,
-      items: [...state.items, ...action.usersResponse.items]
+      items: action.usersResponse.items
     })
   )
 )

@@ -16,12 +16,10 @@ export class Effects {
         return this.http.get<UsersResponse>(environment.searchURL + action.username)
         .pipe(
           map((usersResponse: UsersResponse) => {
-            console.log({usersResponse});
             return rootActions.saveUsers({usersResponse});
           }),
           catchError((err: HttpErrorResponse) => {
             const errorMessage = err.message;
-            console.log({errorMessage});
             return of(rootActions.setErrorMessage({errorMessage}));
           })
         )
