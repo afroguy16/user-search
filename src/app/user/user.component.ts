@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from './user.service';
 import { takeWhile } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { UsersResponse } from '../shared/types/user';
 
 @Component({
   selector: 'app-user',
@@ -13,21 +15,10 @@ export class UserComponent implements OnInit, OnDestroy {
   users = [];
   currentPage = 1;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private store: Store<{users: UsersResponse}>) { }
 
   ngOnInit(): void {
-    this.getUsers();
-  }
-
-  getUsers(): void {
-    this.userService.getUser('afroguy16')
-    .pipe(
-      takeWhile(() => this.alive)
-    )
-    .subscribe(response => {
-      this.usersTotalCount = response.total_count;
-      this.users.push(...response.items);
-    })
+    // this.getUsers();
   }
 
   nextPage(event: number): void {

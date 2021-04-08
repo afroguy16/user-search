@@ -11,6 +11,7 @@ const SEARCH_DELAY = 1000;
   styleUrls: ['./search-users.component.scss']
 })
 export class SearchUsersComponent implements OnInit {
+  alive = true;
   searchValue = '';
   searchUsersControl: FormControl;
 
@@ -24,9 +25,9 @@ export class SearchUsersComponent implements OnInit {
     this.searchUsersControl = new FormControl();
 
     this.searchUsersControl.valueChanges.pipe(debounceTime(SEARCH_DELAY), distinctUntilChanged())
-    .subscribe(() => {
-      this.userService.getUser(this.searchValue);
-    });
+      .subscribe(value => {
+        value && this.userService.getUser(value);
+      });
   }
 
   searchUsers(event): void {
