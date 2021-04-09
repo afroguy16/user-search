@@ -8,7 +8,7 @@ import {Apollo, gql} from 'apollo-angular';
 import { QueryWrapperResponse, SearchResponse, UsersData } from '../shared/types/user';
 import * as rootActions from './actions';
 import { DocumentNode } from 'graphql';
-import { GoToPageToken } from '../shared/types/shared';
+import { GoToPageData } from '../shared/types/shared';
 
 const TOTAL_NUMBER_PER_PAGE = 10;
 @Injectable()
@@ -19,7 +19,7 @@ export class Effects {
       switchMap((action) => {
         return this.apollo
         .watchQuery({
-          query: this.setQuery(action.username, TOTAL_NUMBER_PER_PAGE, action.goToPageToken)
+          query: this.setQuery(action.username, TOTAL_NUMBER_PER_PAGE, action.goToPageData)
         })
         .valueChanges.pipe(
           map((response: QueryWrapperResponse) => {
@@ -38,7 +38,7 @@ export class Effects {
     )
   )
 
-  extractUserData(data: SearchResponse): UsersData {
+  extractUserData(data: SearchResponse): Partial<UsersData> {
     return {
       users: data.search.nodes,
       totalCount: data.search.userCount,
@@ -47,10 +47,10 @@ export class Effects {
     }
   }
 
-  setQuery(query: string, first: number, goToPageToken?: GoToPageToken): DocumentNode {
+  setQuery(query: string, first: number, goToPageData?: GoToPageData): DocumentNode {
     return gql`
       {
-        search(${this.getQueryArgs(query, first, goToPageToken)}) {
+        search(${this.getQueryArgs(query, first, goToPageData)}) {
           nodes {
             ... on User {
               avatarUrl,
@@ -75,15 +75,15 @@ export class Effects {
     `
   }
 
-  getQueryArgs(query: string, first: number, goToPageToken: GoToPageToken): string {
+  getQueryArgs(query: string, first: number, goToPageData: GoToPageData): string {
     let queryArgs = `query:"${query} type:user", type: USER, `;
-    console.log({goToPageToken})
-    switch (goToPageToken?.type) {
+    console.log({goToPageData})
+    switch (goToPageData?.type) {
       case 'next':
-        queryArgs = queryArgs + `first: ${first}, after: "${goToPageToken.value}"`
+        queryArgs = queryArgs + `first: ${first}, after: "${goToPageData.value}"`
         break
       case 'previous':
-        queryArgs = queryArgs + `last: ${first}, before: "${goToPageToken.value}"`
+        queryArgs = queryArgs + `last: ${first}, before: "${goToPageData.value}"`
         break
       default:
         queryArgs = queryArgs + `first: ${first},`;

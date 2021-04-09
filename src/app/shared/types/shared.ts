@@ -7,7 +7,7 @@ export interface GitHubResponse {
   networkStatus: number
 }
 
-export interface GoToPageToken {
+export interface GoToPageData {
   type: string,
   value: string
 }

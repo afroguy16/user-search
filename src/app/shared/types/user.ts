@@ -24,6 +24,7 @@ export interface UserSearchResponse extends GitHubResponse {
   userCount: number
 }
 export interface UsersData extends Countable {
+  username: string,
   users: User[],
   startCursorToken: string,
   endCursorToken: string

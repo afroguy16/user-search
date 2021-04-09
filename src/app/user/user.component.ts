@@ -11,6 +11,7 @@ import { UserService } from './user.service';
 })
 export class UserComponent implements OnInit, OnDestroy {
   alive = true;
+  username = '';
   usersTotalCount = 0;
   itemsPerpage = 10;
   users = [];
@@ -27,6 +28,7 @@ export class UserComponent implements OnInit, OnDestroy {
   setUsers(): void {
     this.store.select('users').pipe(takeWhile(() => this.alive))
     .subscribe((usersResponse: UsersData) => {
+      this.username = usersResponse.username;
       this.users = usersResponse.users;
       this.usersTotalCount = usersResponse.totalCount;
       this.startCursorToken = usersResponse.startCursorToken;
@@ -45,7 +47,7 @@ export class UserComponent implements OnInit, OnDestroy {
   navigatePage(type: string): void {
     console.log(type);
     const value = type === 'next' ? this.endCursorToken : this.startCursorToken;
-    this.userService.getUser('value', {type, value});
+    this.userService.getUser(this.username, {type, value});
   }
 
   ngOnDestroy(): void {

@@ -3,6 +3,7 @@ import { UsersData } from "../shared/types/user";
 import * as actions from "./actions";
 
 const initialState: UsersData = {
+  username: '',
   totalCount: 0,
   users: [],
   startCursorToken: '',
@@ -10,6 +11,14 @@ const initialState: UsersData = {
 };
 
 const _reducer = createReducer(initialState,
+  on(
+    actions.searchUsers,
+    (state, action) => ({
+      ...state,
+      username: action.username,
+    })
+  ),
+
   on(
     actions.saveUsers,
     (state, action) => ({
