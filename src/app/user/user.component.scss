@@ -1,4 +1,15 @@
 .users {
+  &__message {
+    text-align: center;
+    margin-top: 30vh;
+    p {
+      font-size: 20px;
+      color: #000000CC;
+    }
+  }
+}
+
+.users-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 400px));
   grid-gap: 20px;
