@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from './user.service';
 import { takeWhile } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { UsersResponse } from '../shared/types/user';
+import { UsersData } from '../shared/types/user';
 
 @Component({
   selector: 'app-user',
@@ -15,7 +15,7 @@ export class UserComponent implements OnInit, OnDestroy {
   users = [];
   currentPage = 1;
 
-  constructor(private userService: UserService, private store: Store<{users: UsersResponse}>) { }
+  constructor(private userService: UserService, private store: Store<{users: UsersData}>) { }
 
   ngOnInit(): void {
     this.setUsers();
@@ -23,8 +23,8 @@ export class UserComponent implements OnInit, OnDestroy {
 
   setUsers(): void {
     this.store.select('users').pipe(takeWhile(() => this.alive))
-    .subscribe((usersResponse: UsersResponse) => {
-      this.users = usersResponse.items;
+    .subscribe((usersResponse: UsersData) => {
+      this.users = usersResponse.users;
     })
   }
 

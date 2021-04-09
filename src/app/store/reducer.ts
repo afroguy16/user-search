@@ -1,11 +1,10 @@
 import { Action, createReducer, on } from "@ngrx/store";
-import { UsersResponse } from "../shared/types/user";
+import { UsersData } from "../shared/types/user";
 import * as actions from "./actions";
 
-const initialState: UsersResponse = {
-  total_count: 0,
-  incomplete_results: false,
-  items: []
+const initialState: UsersData = {
+  totalCount: 0,
+  users: []
 };
 
 const _reducer = createReducer(initialState,
@@ -13,13 +12,12 @@ const _reducer = createReducer(initialState,
     actions.saveUsers,
     (state, action) => ({
       ...state,
-      total_count: action.usersResponse.total_count,
-      incomplete_result: action.usersResponse.incomplete_results,
-      items: action.usersResponse.items
+      totalCount: action.usersData.totalCount,
+      users: action.usersData.users
     })
   )
 )
 
-export function reducer(state: UsersResponse, action: Action) {
+export function reducer(state: UsersData, action: Action) {
   return _reducer(state, action);
 }
