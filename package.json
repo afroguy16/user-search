@@ -21,10 +21,13 @@
     "@angular/router": "~10.2.0",
     "@ngrx/effects": "^11.1.0",
     "@ngrx/store": "^11.1.0",
+    "apollo-angular": "^2.4.0",
     "ngx-pagination": "^5.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "@apollo/client": "^3.0.0",
+    "graphql": "^15.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1002.0",
