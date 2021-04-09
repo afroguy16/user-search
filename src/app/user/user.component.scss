@@ -9,6 +9,10 @@
   }
 }
 
+.users-count {
+  margin-top: 20px;
+}
+
 .users-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 400px));

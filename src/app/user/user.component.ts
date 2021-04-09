@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from './user.service';
 import { takeWhile } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { UsersData } from '../shared/types/user';
@@ -12,10 +11,11 @@ import { UsersData } from '../shared/types/user';
 export class UserComponent implements OnInit, OnDestroy {
   alive = true;
   usersTotalCount = 0;
+  itemsPerpage = 10;
   users = [];
   currentPage = 1;
 
-  constructor(private userService: UserService, private store: Store<{users: UsersData}>) { }
+  constructor(private store: Store<{users: UsersData}>) { }
 
   ngOnInit(): void {
     this.setUsers();
@@ -25,7 +25,16 @@ export class UserComponent implements OnInit, OnDestroy {
     this.store.select('users').pipe(takeWhile(() => this.alive))
     .subscribe((usersResponse: UsersData) => {
       this.users = usersResponse.users;
+      this.usersTotalCount = usersResponse.totalCount;
     })
+  }
+
+  getPaginationControl(): boolean {
+    return this.usersTotalCount > this.itemsPerpage;
+  }
+
+  isUserAvailable(): boolean {
+    return this.users.length > 0;
   }
 
   nextPage(event: number): void {

@@ -1,7 +1,8 @@
 <div class="users">
   <div class="users-container">
-    <ul class="users-list" *ngIf="users.length > 0">
-      <li *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: currentPage, totalItems: 500 }; let i = index" [tabindex]="index" >
+    <p class="users-count" *ngIf="isUserAvailable()">{{usersTotalCount}} users found</p>
+    <ul class="users-list" *ngIf="isUserAvailable()">
+      <li *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: currentPage, totalItems: usersTotalCount }; let i = index" [tabindex]="index" >
         <a href="{{user.html_url}}" target="_blank" rel="noopener noreferrer" class="link--no-decoration" >
           <div class="image" [ngStyle]="{background: 'url(' + user.avatarUrl + ') center center', backgroundSize: 'cover'}"></div>
           <div class="content">
@@ -15,7 +16,7 @@
       </li>
     </ul>
     
-    <pagination-controls (pageChange)="nextPage($event)" *ngIf="users.length > 0"></pagination-controls>
+    <pagination-controls (pageChange)="nextPage($event)" *ngIf="getPaginationControl()"></pagination-controls>
   </div>
   
   <div class="users__message" *ngIf="users.length < 1">
