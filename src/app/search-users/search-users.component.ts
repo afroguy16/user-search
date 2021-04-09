@@ -11,7 +11,6 @@ const SEARCH_DELAY = 500;
   styleUrls: ['./search-users.component.scss']
 })
 export class SearchUsersComponent implements OnInit {
-  searchValue = '';
   searchUsersControl: FormControl;
 
   constructor(private userService: UserService) { }

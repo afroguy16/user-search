@@ -4,7 +4,9 @@ import * as actions from "./actions";
 
 const initialState: UsersData = {
   totalCount: 0,
-  users: []
+  users: [],
+  startCursorToken: '',
+  endCursorToken: ''
 };
 
 const _reducer = createReducer(initialState,
@@ -13,7 +15,9 @@ const _reducer = createReducer(initialState,
     (state, action) => ({
       ...state,
       totalCount: action.usersData.totalCount,
-      users: action.usersData.users
+      users: action.usersData.users,
+      startCursorToken: action.usersData.startCursorToken,
+      endCursorToken: action.usersData.endCursorToken
     })
   )
 )

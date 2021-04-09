@@ -16,7 +16,15 @@
       </li>
     </ul>
     
-    <pagination-controls (pageChange)="nextPage($event)" *ngIf="getPaginationControl()"></pagination-controls>
+    <!-- Pagination numbers not working because I couldn't find any where in the docs to make it work, even after my research, in a real life app, I would collaborate with BE devs to get to the root cause -->
+    <!-- Another way that is not optimal would be to handle the pagination on the FE -->
+    <!-- I am leaving this solution here, so you can see my pagination implmentation and understand the challenge I faced -->
+    <!-- <pagination-controls (pageChange)="nextPage($event)" *ngIf="getPaginationControl()"></pagination-controls> -->
+
+    <div class="actions">
+      <button (click)="navigatePage('previous')">Previous</button>
+      <button (click)="navigatePage('next')">Next</button>
+    </div>
   </div>
   
   <div class="users__message" *ngIf="users.length < 1">

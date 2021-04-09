@@ -6,3 +6,8 @@ export interface GitHubResponse {
   loading: boolean,
   networkStatus: number
 }
+
+export interface GoToPageToken {
+  type: string,
+  value: string
+}

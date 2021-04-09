@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { UsersData } from '../shared/types/user';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-user',
@@ -14,8 +15,10 @@ export class UserComponent implements OnInit, OnDestroy {
   itemsPerpage = 10;
   users = [];
   currentPage = 1;
+  startCursorToken = '';
+  endCursorToken = ''
 
-  constructor(private store: Store<{users: UsersData}>) { }
+  constructor(private userService: UserService, private store: Store<{users: UsersData}>) { }
 
   ngOnInit(): void {
     this.setUsers();
@@ -26,6 +29,8 @@ export class UserComponent implements OnInit, OnDestroy {
     .subscribe((usersResponse: UsersData) => {
       this.users = usersResponse.users;
       this.usersTotalCount = usersResponse.totalCount;
+      this.startCursorToken = usersResponse.startCursorToken;
+      this.endCursorToken = usersResponse.endCursorToken;
     })
   }
 
@@ -37,8 +42,10 @@ export class UserComponent implements OnInit, OnDestroy {
     return this.users.length > 0;
   }
 
-  nextPage(event: number): void {
-    this.currentPage = event;
+  navigatePage(type: string): void {
+    console.log(type);
+    const value = type === 'next' ? this.endCursorToken : this.startCursorToken;
+    this.userService.getUser('value', {type, value});
   }
 
   ngOnDestroy(): void {

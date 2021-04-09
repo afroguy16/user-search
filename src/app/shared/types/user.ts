@@ -13,10 +13,18 @@ export interface User {
   login: string
   name: string
 }
+
+export interface PageInfo {
+  startCursor: string,
+  endCursor: string
+}
 export interface UserSearchResponse extends GitHubResponse {
   nodes: User[],
+  pageInfo: PageInfo,
   userCount: number
 }
 export interface UsersData extends Countable {
   users: User[],
+  startCursorToken: string,
+  endCursorToken: string
 }

@@ -1,9 +1,10 @@
 import { createAction, props } from "@ngrx/store";
+import { GoToPageToken } from "../shared/types/shared";
 import { UsersData } from "../shared/types/user";
  
 export const searchUsers = createAction(
   '[Users] Search Users',
-  props<{username: string, pageNumber?: number}>()
+  props<{username: string, goToPageToken?: GoToPageToken}>()
 );
 
 export const saveUsers = createAction(
