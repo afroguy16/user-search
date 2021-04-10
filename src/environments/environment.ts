@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   searchURL: 'https://api.github.com/search/users?q=',
-  token: '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'
+  token: '@@TOKEN'
 };
 
 /*
