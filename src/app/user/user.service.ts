@@ -1,14 +1,15 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UsersResponse } from '../shared/types/user';
+import { Store } from '@ngrx/store';
+import { GoToPageData } from '../shared/types/shared';
+import * as rootActions from '../store/actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private http: HttpClient) { }
+  constructor(private store: Store) { }
 
-  getUser() {
-    return this.http.get<UsersResponse>('https://api.github.com/search/users?q=example');
+  searchUser(username: string, goToPageData?: GoToPageData) {
+    this.store.dispatch(rootActions.searchUsers({username, goToPageData}));
   }
 }
