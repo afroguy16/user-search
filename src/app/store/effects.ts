@@ -1,4 +1,3 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -9,8 +8,11 @@ import { QueryWrapperResponse, SearchResponse, UsersData } from '../shared/types
 import * as rootActions from './actions';
 import { DocumentNode } from 'graphql';
 import { GoToPageData } from '../shared/types/shared';
+import { AlertConfig } from '../shared/types/alert';
+import { AlertService } from '../shared/services/alert.service';
+import { AlertType } from '../shared/enums/alert';
 
-const TOTAL_NUMBER_PER_PAGE = 10;
+const TOTAL_NUMBER_PER_PAGE = 12;
 @Injectable()
 export class Effects {
   searchUsers$ = createEffect(() => 
@@ -24,13 +26,12 @@ export class Effects {
         .valueChanges.pipe(
           map((response: QueryWrapperResponse) => {
             const usersData = this.extractUserData(response.data);
-            console.log(response, usersData)
             return rootActions.saveUsers({usersData});
           }),
-          catchError((err: HttpErrorResponse) => {
-            const errorMessage = err.message;
-            // This error will be handled in a real app
-            console.log(errorMessage)
+          catchError(() => {
+            const errorMessage = 'Something went wrong, refresh the app then start searching again.';
+            // This error will be be used for each case, but here, I am discarding the error, and hard coding a value
+            this.showError({type: AlertType.DANGER, message: errorMessage})
             return of(rootActions.setErrorMessage({errorMessage}));
           })
         )
@@ -38,16 +39,22 @@ export class Effects {
     )
   )
 
-  extractUserData(data: SearchResponse): Partial<UsersData> {
+  constructor(private actions$: Actions, private apollo: Apollo, private alertService: AlertService) {}
+
+  private extractUserData(data: SearchResponse): Partial<UsersData> {
     return {
       users: data.search.nodes,
       totalCount: data.search.userCount,
-      startCursorToken: data.search.pageInfo.startCursor,
-      endCursorToken: data.search.pageInfo.endCursor
+      pageInfo: {
+        hasNextPage: data.search.pageInfo.hasNextPage,
+        hasPreviousPage: data.search.pageInfo.hasPreviousPage,
+        startCursor: data.search.pageInfo.startCursor,
+        endCursor: data.search.pageInfo.endCursor,
+      }
     }
   }
 
-  setQuery(query: string, first: number, goToPageData?: GoToPageData): DocumentNode {
+  private setQuery(query: string, first: number, goToPageData?: GoToPageData): DocumentNode {
     return gql`
       {
         search(${this.getQueryArgs(query, first, goToPageData)}) {
@@ -63,21 +70,23 @@ export class Effects {
               },
               login,
               name,
+              url
             }
           }
           userCount,
           pageInfo {
             startCursor,
-            endCursor
+            endCursor,
+            hasPreviousPage,
+            hasNextPage
           }
         }
       }
     `
   }
 
-  getQueryArgs(query: string, first: number, goToPageData: GoToPageData): string {
+  private getQueryArgs(query: string, first: number, goToPageData: GoToPageData): string {
     let queryArgs = `query:"${query} type:user", type: USER, `;
-    console.log({goToPageData})
     switch (goToPageData?.type) {
       case 'next':
         queryArgs = queryArgs + `first: ${first}, after: "${goToPageData.value}"`
@@ -89,11 +98,10 @@ export class Effects {
         queryArgs = queryArgs + `first: ${first},`;
         break;
     }
-    console.log({queryArgs})
     return queryArgs;
   }
 
-  constructor(private actions$: Actions, private http: HttpClient, private apollo: Apollo) {}
-
-
+  showError(config: AlertConfig): void {
+    this.alertService.open(config);
+  }
 }

@@ -15,24 +15,27 @@ export class UserComponent implements OnInit, OnDestroy {
   usersTotalCount = 0;
   itemsPerpage = 10;
   users = [];
-  currentPage = 1;
+  hasPreviousPage = false;
+  hasNextPage = false;
   startCursorToken = '';
   endCursorToken = ''
 
   constructor(private userService: UserService, private store: Store<{users: UsersData}>) { }
 
   ngOnInit(): void {
-    this.setUsers();
+    this.setUsersPageData();
   }
 
-  setUsers(): void {
+  setUsersPageData(): void {
     this.store.select('users').pipe(takeWhile(() => this.alive))
     .subscribe((usersResponse: UsersData) => {
       this.username = usersResponse.username;
       this.users = usersResponse.users;
       this.usersTotalCount = usersResponse.totalCount;
-      this.startCursorToken = usersResponse.startCursorToken;
-      this.endCursorToken = usersResponse.endCursorToken;
+      this.hasPreviousPage = usersResponse.pageInfo.hasPreviousPage;
+      this.hasNextPage = usersResponse.pageInfo.hasNextPage;
+      this.startCursorToken = usersResponse.pageInfo.startCursor;
+      this.endCursorToken = usersResponse.pageInfo.endCursor;
     })
   }
 
@@ -47,7 +50,7 @@ export class UserComponent implements OnInit, OnDestroy {
   navigatePage(type: string): void {
     console.log(type);
     const value = type === 'next' ? this.endCursorToken : this.startCursorToken;
-    this.userService.getUser(this.username, {type, value});
+    this.userService.searchUser(this.username, {type, value});
   }
 
   ngOnDestroy(): void {

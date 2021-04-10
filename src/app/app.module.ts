@@ -14,13 +14,16 @@ import { reducer } from './store/reducer';
 import { Effects } from './store/effects';
 import { GraphQLModule } from './graphql.module';
 import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
+import { AlertComponent } from './shared/components/alert/alert.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchUsersComponent,
-    UserComponent
+    UserComponent,
+    AlertComponent,
   ],
+  entryComponents: [AlertComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

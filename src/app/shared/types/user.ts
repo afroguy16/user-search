@@ -1,4 +1,4 @@
-import { Countable, GitHubResponse } from "./shared";
+import { Countable, GitHubResponse, PageInfo } from "./shared";
 export interface QueryWrapperResponse extends GitHubResponse {
   data: SearchResponse
 }
@@ -12,11 +12,7 @@ export interface User {
   following: Countable
   login: string
   name: string
-}
-
-export interface PageInfo {
-  startCursor: string,
-  endCursor: string
+  url: string
 }
 export interface UserSearchResponse extends GitHubResponse {
   nodes: User[],
@@ -26,6 +22,5 @@ export interface UserSearchResponse extends GitHubResponse {
 export interface UsersData extends Countable {
   username: string,
   users: User[],
-  startCursorToken: string,
-  endCursorToken: string
+  pageInfo: PageInfo
 }

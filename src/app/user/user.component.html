@@ -3,7 +3,7 @@
     <p class="users-count" *ngIf="isUserAvailable()">{{usersTotalCount}} users found</p>
     <ul class="users-list" *ngIf="isUserAvailable()">
       <li *ngFor="let user of users | paginate: { itemsPerPage: 10, currentPage: currentPage, totalItems: usersTotalCount }; let i = index" [tabindex]="index" >
-        <a href="{{user.html_url}}" target="_blank" rel="noopener noreferrer" class="link--no-decoration" >
+        <a href="{{user.url}}" target="_blank" rel="noopener noreferrer" class="link--no-decoration" >
           <div class="image" [ngStyle]="{background: 'url(' + user.avatarUrl + ') center center', backgroundSize: 'cover'}"></div>
           <div class="content">
             <h3>{{user.login}}</h3>
@@ -21,13 +21,13 @@
     <!-- I am leaving this solution here, so you can see my pagination implmentation and understand the challenge I faced -->
     <!-- <pagination-controls (pageChange)="nextPage($event)" *ngIf="getPaginationControl()"></pagination-controls> -->
 
-    <div class="actions">
-      <button (click)="navigatePage('previous')">Previous</button>
-      <button (click)="navigatePage('next')">Next</button>
+    <div class="actions" *ngIf="getPaginationControl()">
+      <a (click)="navigatePage('previous')" [class.disabled]="!hasPreviousPage">Previous</a>
+      <a (click)="navigatePage('next')" [class.disabled]="!hasNextPage">Next</a>
     </div>
   </div>
   
   <div class="users__message" *ngIf="users.length < 1">
-    <p>Click on the on input field to start searching</p>
+    <p>Click on the input field to search</p>
   </div>
 </div>

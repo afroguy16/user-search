@@ -6,8 +6,12 @@ const initialState: UsersData = {
   username: '',
   totalCount: 0,
   users: [],
-  startCursorToken: '',
-  endCursorToken: ''
+  pageInfo: {
+    hasNextPage: false,
+    hasPreviousPage: false,
+    startCursor: '',
+    endCursor: ''
+  }
 };
 
 const _reducer = createReducer(initialState,
@@ -25,8 +29,13 @@ const _reducer = createReducer(initialState,
       ...state,
       totalCount: action.usersData.totalCount,
       users: action.usersData.users,
-      startCursorToken: action.usersData.startCursorToken,
-      endCursorToken: action.usersData.endCursorToken
+      pageInfo: {
+        ...state.pageInfo,
+        hasPreviousPage: action.usersData.pageInfo.hasPreviousPage,
+        hasNextPage: action.usersData.pageInfo.hasNextPage,
+        startCursor: action.usersData.pageInfo.startCursor,
+        endCursor: action.usersData.pageInfo.endCursor
+       }
     })
   )
 )

@@ -9,7 +9,7 @@ import * as rootActions from '../store/actions';
 export class UserService {
   constructor(private store: Store) { }
 
-  getUser(username: string, goToPageData?: GoToPageData) {
+  searchUser(username: string, goToPageData?: GoToPageData) {
     this.store.dispatch(rootActions.searchUsers({username, goToPageData}));
   }
 }

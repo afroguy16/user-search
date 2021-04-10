@@ -24,7 +24,7 @@ export class SearchUsersComponent implements OnInit {
 
     this.searchUsersControl.valueChanges.pipe(debounceTime(SEARCH_DELAY), distinctUntilChanged())
       .subscribe(value => {
-        value && this.userService.getUser(value);
+        value && this.userService.searchUser(value);
       });
   }
 

@@ -57,3 +57,23 @@ li {
     margin-bottom: 10px;
   }
 }
+
+.actions {
+  > * {
+    &:first-child {
+      margin-right: 20px;
+    }
+  }
+  a {
+    cursor: pointer;
+    color: #3e7cb1;
+    &:hover {
+      color: #054a91;
+    }
+    &.disabled {
+      color: #0000001A;
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+}
