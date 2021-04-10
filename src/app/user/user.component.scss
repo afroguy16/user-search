@@ -1,14 +1,3 @@
-.users {
-  &__message {
-    text-align: center;
-    margin-top: 30vh;
-    p {
-      font-size: 20px;
-      color: #000000CC;
-    }
-  }
-}
-
 .users-count {
   margin-top: 20px;
 }
@@ -24,10 +13,10 @@
     cursor: pointer;
     transition: border-color 0.5s;
     &:hover {
-      box-shadow: 0 3px 6px #0000001A;
+      box-shadow: 0 3px 6px #0000001a;
     }
     &:active {
-      box-shadow: 0 1px 6px #0000000D;
+      box-shadow: 0 1px 6px #0000000d;
     }
     > a {
       width: 100%;
@@ -71,7 +60,7 @@ li {
       color: #054a91;
     }
     &.disabled {
-      color: #0000001A;
+      color: #0000001a;
       cursor: default;
       pointer-events: none;
     }
