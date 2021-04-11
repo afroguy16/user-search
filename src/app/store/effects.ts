@@ -41,6 +41,8 @@ export class Effects {
 
   constructor(private actions$: Actions, private apollo: Apollo, private alertService: AlertService) {}
 
+  // Ideally these functions and query can be moved out the effects file so the code is not clogged
+
   private extractUserData(data: SearchResponse): Partial<UsersData> {
     return {
       users: data.search.nodes,

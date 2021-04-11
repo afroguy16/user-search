@@ -3,6 +3,7 @@ import { takeWhile } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { UsersData } from '../../shared/types/user';
 import { UserService } from './user.service';
+import { PageNavigationEnum } from 'src/app/shared/enums/page-navigation';
 
 @Component({
   selector: 'app-user',
@@ -48,8 +49,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   navigatePage(type: string): void {
-    console.log(type);
-    const value = type === 'next' ? this.endCursorToken : this.startCursorToken;
+    const value = type === PageNavigationEnum.NEXT ? this.endCursorToken : this.startCursorToken;
     this.userService.searchUser(this.username, {type, value});
   }
 
