@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { UsersData } from '../shared/types/user';
+import { UsersData } from '../../shared/types/user';
 import { UserService } from './user.service';
 
 @Component({
