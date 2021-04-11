@@ -11,6 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Replace token
+        uses: nguyenvanuyn96/str-find-and-replace-action@0.0.5
+        with:
+          find: "@@TOKEN"
+          replace: ${{ secrets.GITHUB_TOKEN }}
+          include: "environments/"
       - run: |
           npm i
           npm run build
