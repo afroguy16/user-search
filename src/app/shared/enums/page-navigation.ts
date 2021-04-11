@@ -1,4 +1,4 @@
-export enum PageNavigationEnum {
+export enum PageNavigationEnums {
   NEXT = 'next',
   PREVIOUS = 'previous'
 }

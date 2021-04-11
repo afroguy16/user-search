@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { AlertType } from "../../enums/alert";
+import { AlertEnums } from "../../enums/alert";
 import { AlertConfig } from "../../types/alert";
 import { includes, isEmpty } from 'lodash';
 import { AlertService } from "../../services/alert.service";
@@ -40,7 +40,7 @@ export class AlertComponent implements OnInit {
   isConfigType(data: unknown): data is AlertConfig {
     return (
       (data as AlertConfig).type !== undefined &&
-      includes(AlertType, (data as AlertConfig).type) &&
+      includes(AlertEnums, (data as AlertConfig).type) &&
       (data as AlertConfig).message !== undefined &&
       typeof (data as AlertConfig).message === 'string'
     );

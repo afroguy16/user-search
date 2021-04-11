@@ -1,6 +1,6 @@
-import { AlertType } from "../enums/alert";
+import { AlertEnums } from "../enums/alert";
 
 export interface AlertConfig {
-  type: AlertType.DANGER;
+  type: AlertEnums.DANGER;
   message: string;
 }

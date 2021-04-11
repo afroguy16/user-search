@@ -10,7 +10,7 @@ import { DocumentNode } from 'graphql';
 import { GoToPageData } from '../shared/types/shared';
 import { AlertConfig } from '../shared/types/alert';
 import { AlertService } from '../shared/services/alert.service';
-import { AlertType } from '../shared/enums/alert';
+import { AlertEnums } from '../shared/enums/alert';
 
 const TOTAL_NUMBER_PER_PAGE = 12;
 @Injectable()
@@ -31,7 +31,7 @@ export class Effects {
           catchError(() => {
             const errorMessage = 'Something went wrong, refresh the app then start searching again.';
             // This error will be be used for each case, but here, I am discarding the error, and hard coding a value
-            this.showError({type: AlertType.DANGER, message: errorMessage})
+            this.showError({type: AlertEnums.DANGER, message: errorMessage})
             return of(rootActions.setErrorMessage({errorMessage}));
           })
         )

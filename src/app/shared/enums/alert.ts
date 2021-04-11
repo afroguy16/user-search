@@ -1,3 +1,3 @@
-export enum AlertType {
+export enum AlertEnums {
   DANGER = 'danger'
 }
