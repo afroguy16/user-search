@@ -15,7 +15,7 @@ jobs:
         uses: nguyenvanuyn96/str-find-and-replace-action@0.0.5
         with:
           find: "@@TOKEN"
-          replace: ${{ secrets.GITHUB_TOKEN }}
+          replace: ${{ secrets.TOKEN }}
           include: "environments/"
       - run: |
           npm i
