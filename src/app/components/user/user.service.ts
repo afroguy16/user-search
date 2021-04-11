@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { GoToPageData } from '../shared/types/shared';
-import * as rootActions from '../store/actions';
+import { GoToPageData } from '../../shared/types/shared';
+import * as rootActions from '../../store/actions';
 
 @Injectable({
   providedIn: 'root'
